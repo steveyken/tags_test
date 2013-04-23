@@ -1,0 +1,33 @@
+== Test application for ActsAsTaggableOn Issue
+
+This is a test rails application to investigate an issue in the gem 'acts-as-taggable-on'
+where tag attributes are reported to have changed (via ActiveRecord::Dirty) when actually no changes
+have been made.
+
+This is a minimal rails app, with acts-as-taggable-on gem installed and a Fruit model that can have tags.
+
+== Steps to reproduce:
+
+* Start a rails console and seed some tags:
+
+  >> ActsAsTaggableOn::Tag.create :name => 'ripe'
+  >> ActsAsTaggableOn::Tag.create :name => 'unripe'
+  >> ActsAsTaggableOn::Tag.create :name => 'over-ripe'
+
+* Start rails server.
+* Goto http://localhost:3000/fruit
+* Create a new fruit.
+* Give it the tags 'ripe' and 'over-ripe'
+* Goto app/models/fruit.rb and uncomment the after_save block with debugger statement
+* Restart rails server
+* Edit the fruit and save (with no changes).
+* At the debugger console, observe the following:
+
+  >> p self.tag_list_change
+    ["ripe, over-ripe", ["ripe", "over-ripe"]]
+  >> (rdb:80) p self.tag_list_change.first.class
+    String
+  >> (rdb:80) p self.tag_list_change.last.class
+    ActsAsTaggableOn::TagList
+
+It appears the change has been serialised into the TagList class which is confusing the '_change' method.

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @fruit.title %>
+</p>
+
+<p>
+  <b>Tags:</b>
+  <%= @fruit.tag_list %>
+</p>
+
+<%= link_to 'Edit', edit_fruit_path(@fruit) %> |
+<%= link_to 'Back', fruits_path %>

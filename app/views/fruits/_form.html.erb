@@ -1,0 +1,26 @@
+<%= form_for(@fruit) do |f| %>
+  <% if @fruit.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fruit.errors.count, "error") %> prohibited this fruit from being saved:</h2>
+
+      <ul>
+      <% @fruit.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :tags %><br />
+    <%= f.select :tag_list, ActsAsTaggableOn::Tag.all.collect{|t| [t.name, t.name]}, {}, {:multiple => true} %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
