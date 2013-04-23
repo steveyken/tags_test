@@ -10,9 +10,9 @@ This is a minimal rails app, with acts-as-taggable-on gem installed and a Fruit 
 
 * Start a rails console and seed some tags:
 
-  >> ActsAsTaggableOn::Tag.create :name => 'ripe'
-  >> ActsAsTaggableOn::Tag.create :name => 'unripe'
-  >> ActsAsTaggableOn::Tag.create :name => 'over-ripe'
+    >> ActsAsTaggableOn::Tag.create :name => 'ripe'
+    >> ActsAsTaggableOn::Tag.create :name => 'unripe'
+    >> ActsAsTaggableOn::Tag.create :name => 'over-ripe'
 
 * Start rails server.
 * Goto http://localhost:3000/fruit
@@ -23,11 +23,11 @@ This is a minimal rails app, with acts-as-taggable-on gem installed and a Fruit 
 * Edit the fruit and save (with no changes).
 * At the debugger console, observe the following:
 
-  >> p self.tag_list_change
+    >> p self.tag_list_change
     ["ripe, over-ripe", ["ripe", "over-ripe"]]
-  >> (rdb:80) p self.tag_list_change.first.class
+    >> (rdb:80) p self.tag_list_change.first.class
     String
-  >> (rdb:80) p self.tag_list_change.last.class
+    >> (rdb:80) p self.tag_list_change.last.class
     ActsAsTaggableOn::TagList
 
 It appears the change has been serialised into the TagList class which is confusing the '_change' method.
